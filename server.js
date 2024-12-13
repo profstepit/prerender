@@ -16,11 +16,21 @@ const server = prerender({
   logRequests: true,
 });
 
-server.use(prerender.sendPrerenderHeader());
-server.use(prerender.browserForceRestart());
-server.use(prerender.blockResources());
-server.use(prerender.addMetaTags());
-server.use(prerender.removeScriptTags());
-server.use(prerender.httpHeaders());
+const pluginsStatus = {
+  ENABLE_PRERENDER_HEADER: prerender.sendPrerenderHeader,
+  ENABLE_BROWSER_FORCE_RESTART: prerender.browserForceRestart,
+  ENABLE_RESOURCE_BLOCKING: prerender.blockResources,
+  ENABLE_META_TAGS: prerender.addMetaTags,
+  ENABLE_REMOVE_SCRIPT_TAGS: prerender.removeScriptTags,
+  ENABLE_HTTP_HEADERS: prerender.httpHeaders,
+  ENABLE_BASIC_AUTH: prerender.basicAuth,
+  ENABLE_DOMAINS_WHITELIST: prerender.whitelist
+}
+
+for (const envConfig in pluginsStatus) {
+  if (process.env[envConfig] === '1') {
+    server.use(pluginsStatus[envConfig]());
+  }
+}
 
 server.start();
