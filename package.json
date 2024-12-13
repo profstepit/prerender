@@ -6,12 +6,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/prerender/prerender"
+    "url": "https://github.com/profstepit/prerender"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "chrome-remote-interface": "^0.30.0",
     "compression": "^1.7.4",
+    "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "he": "^1.2.0",
     "uuid": "^8.3.2",
@@ -23,7 +24,7 @@
     "sinon": "^11.1.1"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js --env-file=.env",
     "test": "./node_modules/.bin/mocha --recursive"
   },
   "engines": {
